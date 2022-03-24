@@ -17,7 +17,6 @@
 	"license": "ISC",
 	"dependencies": {
 		"date-fns": "^2.16.1",
-		"rxjs": "7.5.4",
 		"zod": "^3.11.6",
 		"zod-to-json-schema": "^3.11.2",
 		"form-data": "^4.0.0",

@@ -1,28 +1,6 @@
-import { postByUrlencodedHttpClient } from '@b/lib';
 import { FastifyPluginAsync } from 'fastify';
-import { firstValueFrom } from 'rxjs';
-import { envConfig } from '../environment';
-
-type lineResultType = {
-	status: string;
-};
-
-type alertmanagerWebhookType = {
-	alerts: [
-		{
-			status: 'resolved' | 'firing';
-			labels: object;
-			annotations: {
-				description: string;
-				summary: string;
-			};
-			startsAt: string; //rfc3339
-			endsAt: string; // rfc3339
-			generatorURL: string; // identifies the entity that caused the alert
-			fingerprint: string; // fingerprint to identify the alert
-		}
-	];
-};
+import { alertmanagerWebhookType } from '../common/_types';
+import { sendMsgByLineNotify } from '../services/line-notify.service';
 
 const lineNotifyController: FastifyPluginAsync = async (server, options) => {
 	server.post(
@@ -33,33 +11,9 @@ const lineNotifyController: FastifyPluginAsync = async (server, options) => {
 		// 	}
 		// },
 		async (req, res) => {
-			const { alerts } = req.body as alertmanagerWebhookType;
-
-			console.log(req.body);
-
-			const lineInfo = envConfig.lineInfo;
-			const url = lineInfo.endPoint;
-			const token = lineInfo.token;
-			const options = {
-				headers: {
-					Authorization: `Bearer ${token}`
-				}
-			};
-
-			for (const item of alerts) {
-				const body = {
-					message: `
-summary: ${item.annotations.summary}
-description: ${item.annotations.description}
-`
-				};
-
-				const rr = await firstValueFrom(
-					postByUrlencodedHttpClient<lineResultType>(url, body, options, 'json')
-				);
-			}
-
-			return { result: `${alerts.length} sent...` };
+			const info = req.body as alertmanagerWebhookType;
+			const rtnInfo = await sendMsgByLineNotify(info);
+			return { result: `${rtnInfo?.successCount} sent...` };
 		}
 	);
 };
@@ -101,8 +55,6 @@ export default lineNotifyController;
 // 	]
 // }
 
-
-
 // alerts1='[
 //   {
 //     "labels": {
@@ -119,7 +71,6 @@ export default lineNotifyController;
 //       }
 //   }
 // ]'
-
 
 // ## Line Notify template for Firing Alert
 //
@@ -139,27 +90,24 @@ export default lineNotifyController;
 //     - {{labels.instance}}
 // {{/alerts}}
 
-
-
-// alert='{
-//   "version": "4",
-//   "alerts": [
-//     {
-//       "labels": {
-//         "alertname": "test name11133443",
-//         "severity" : "Warning"
-//       },
-//       "annotations": {
-//         "Threshold": "<= 2",
-//         "dashboard": "test",
-//         "description":"test",
-//         "infoURL":"test",
-//         "summary":"this is a test mail",
-//         "value":"2"
-//       }
-//     }
-//   ]
-// }'
-
-// server=localhost:3000
-// curl -H "Content-Type: application/json" -X POST -d "${alert}" http://${server}/api/line-notify/webhook
+// curl --location --request POST 'http://localhost:3000/api/line-notify/webhook' \
+// 	--header 'Content-Type: application/json' \
+// 	--data-raw '{
+// 		"version": "4",
+// 		"alerts": [
+// 			{
+// 				"labels": {
+// 					"alertname": "test name11133443",
+// 					"severity" : "Warning"
+// 				},
+// 				"annotations": {
+// 					"Threshold": "<= 2",
+// 					"dashboard": "test",
+// 					"description":"test",
+// 					"infoURL":"test",
+// 					"summary":"this is a test mail",
+// 					"value":"2"
+// 				}
+// 			}
+// 		]
+// 	}'

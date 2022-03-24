@@ -1,8 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { from, Observable, throwError } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { EnumMyErrorType } from '..';
-import { MyError } from './myError';
+import { EnumMyErrorType, MyError } from './myError';
 
 // 'json' | 'text' | 'blob' | 'arraybuffer' = 'json'
 export type resType = 'json' | 'text';
@@ -16,46 +13,36 @@ const noCacheHeaders = {
 	Expires: '0'
 };
 
-const checkStausAndHandleData = <T>(res: Response, resType: resType = 'json') => {
+const checkStausAndHandleData = async <T>(res: Response, resType: resType = 'json') => {
 	if (res.ok) {
 		// res.status >= 200 && res.status < 300
 		if (resType === 'json') {
-			return from<Promise<T>>(res.json());
+			return res.json() as Promise<T>;
 		}
 		if (resType === 'text') {
-			return from<Promise<string>>(res.text());
+			return res.text() as Promise<string>;
 		}
 		const myError = new MyError(EnumMyErrorType.notSupportHttpContentType);
-		return throwError(() => myError);
+		throw myError;
 	} else {
-		return from(res.json()).pipe(
-			switchMap((info) => {
-				// const myError = MyError.wrap(Error(info));
-				return throwError(() => info);
-			})
-		);
+		const jj = (await res.json()) as object;
+		throw Error(JSON.stringify(jj));
 	}
 };
 
-const getResult =
-	<T>(resType: resType) =>
-	(source: Observable<Response>) =>
-		source.pipe(
-			switchMap((res: Response) => checkStausAndHandleData<T>(res, resType)),
-			map((data) => data)
-		);
+const getResult = <T>(res: Response, resType: resType) => checkStausAndHandleData<T>(res, resType);
 
-export const getHttpClient = <T>(
+export const getHttpClient = async <T>(
 	url: string,
 	options: { [key: string]: object | string } = { headers: {} },
 	resType: resType = 'json'
-) =>
-	from(
-		fetch(url, {
-			method: 'GET',
-			...options
-		})
-	).pipe(getResult<T>(resType));
+) => {
+	const res = await fetch(url, {
+		method: 'GET',
+		...options
+	});
+	return await getResult<T>(res, resType);
+};
 
 export const getByNoCacheHttpClient = <T>(
 	url: string,
@@ -76,7 +63,7 @@ export const getByNoCacheHttpClient = <T>(
 		resType
 	);
 
-export const postByUrlencodedHttpClient = <T>(
+export const postByUrlencodedHttpClient = async <T>(
 	url: string,
 	body: { [key: string]: string },
 	options: { [key: string]: object | string } = { headers: {} },
@@ -86,13 +73,14 @@ export const postByUrlencodedHttpClient = <T>(
 	for (const key in body) {
 		params.append(key, body[key]);
 	}
-	return from(
-		fetch(url, {
-			method: 'POST',
-			...options,
-			body: params
-		})
-	).pipe(getResult<T>(resType));
+
+	const res = await fetch(url, {
+		method: 'POST',
+		...options,
+		body: params
+	});
+
+	return await getResult<T>(res, resType);
 };
 
 export const postByFormDataHttpClient = async <T>(
@@ -110,66 +98,67 @@ export const postByFormDataHttpClient = async <T>(
 		data.append(key, obj);
 	}
 
-	return from(
-		fetch(url, {
-			method: 'POST',
-			...options,
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			body: data as any
-		})
-	).pipe(getResult<T>(resType));
+	const res = await fetch(url, {
+		method: 'POST',
+		...options,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		body: data as any
+	});
+	return await getResult<T>(res, resType);
 };
 
-export const postHttpClient = <T>(
+export const postHttpClient = async <T>(
 	url: string,
 	body: object,
 	options: { [key: string]: object | string } = { headers: {} },
 	resType: resType = 'json'
-) =>
-	from(
-		fetch(url, {
-			method: 'POST',
-			...options,
-			body: JSON.stringify(body)
-		})
-	).pipe(getResult<T>(resType));
+) => {
+	const res = await fetch(url, {
+		method: 'POST',
+		...options,
+		body: JSON.stringify(body)
+	});
 
-export const patchHttpClient = <T>(
+	return await getResult<T>(res, resType);
+};
+
+export const patchHttpClient = async <T>(
 	url: string,
 	body: object,
 	options: { [key: string]: object | string } = { headers: {} },
 	resType: resType = 'json'
-) =>
-	from(
-		fetch(url, {
-			method: 'PATCH',
-			...options,
-			body: JSON.stringify(body)
-		})
-	).pipe(getResult<T>(resType));
+) => {
+	const res = await fetch(url, {
+		method: 'PATCH',
+		...options,
+		body: JSON.stringify(body)
+	});
 
-export const putHttpClient = <T>(
+	return await getResult<T>(res, resType);
+};
+
+export const putHttpClient = async <T>(
 	url: string,
 	body: object,
 	options: { [key: string]: object | string } = { headers: {} },
 	resType: resType = 'json'
-) =>
-	from(
-		fetch(url, {
-			method: 'PUT',
-			...options,
-			body: JSON.stringify(body)
-		})
-	).pipe(getResult<T>(resType));
+) => {
+	const res = await fetch(url, {
+		method: 'PUT',
+		...options,
+		body: JSON.stringify(body)
+	});
+	return await getResult<T>(res, resType);
+};
 
-export const delHttpClient = <T>(
+export const delHttpClient = async <T>(
 	url: string,
 	options: { [key: string]: object | string } = { headers: {} },
 	resType: resType = 'json'
-) =>
-	from(
-		fetch(url, {
-			method: 'DELETE',
-			...options
-		})
-	).pipe(getResult<T>(resType));
+) => {
+	const res = await fetch(url, {
+		method: 'DELETE',
+		...options
+	});
+	return getResult<T>(res, resType);
+};
