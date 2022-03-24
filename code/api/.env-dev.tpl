@@ -1,4 +1,8 @@
 {
 	"siteName": "alertmanager-webhook_line-notify",
-	"envType": "dev"	
+	"envType": "dev",
+	"lineInfo": {
+		"token": "<token>",
+		"endPoint": "<endPoint>"
+	}
 }

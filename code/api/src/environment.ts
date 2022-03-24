@@ -4,6 +4,10 @@ import * as jsonObj from './_env.json';
 interface IConfig {
 	siteName: string;
 	envType: EnumEnvType;
+	lineInfo: {
+		token: string;
+		endPoint: string;
+	};
 }
 
 const env = process.env.NODE_ENV;
