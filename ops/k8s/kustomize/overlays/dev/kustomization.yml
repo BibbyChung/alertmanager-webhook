@@ -1,0 +1,10 @@
+bases:
+  - ../../base/
+namespace: alertmanager-webhook-dev
+namePrefix: dev-
+
+configMapGenerator:
+  - name: env-configmap
+    behavior: merge
+    envs:
+      - ./.env

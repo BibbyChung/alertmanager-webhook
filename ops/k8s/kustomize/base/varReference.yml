@@ -1,0 +1,4 @@
+# replace $(XXX_XXX)
+varReference:
+  - kind: Deployment
+    path: spec/template/spec/containers/image

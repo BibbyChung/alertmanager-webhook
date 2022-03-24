@@ -1,5 +1,5 @@
 {
-	"name": "alertmanager-webhook_line-notify",
+	"name": "alertmanager-webhook",
 	"version": "1.0.0",
 	"description": "Alertmanager Webhook to Line Notify",
 	"main": "./dist/web/server.js",

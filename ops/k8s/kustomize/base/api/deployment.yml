@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  labels:
+    app: api-lab
+spec:
+  selector:
+    matchLabels:
+      app: api-pod
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: api-pod
+    spec:
+      # initContainers:
+      # Init containers are exactly like regular containers, except:
+      # - Init containers always run to completion.
+      # - Each init container must complete successfully before the next one starts.
+      containers:
+        - name: app
+          image: $(API_IMAGE) # app-image
+          resources:
+            requests:
+              cpu: 128m
+              memory: 128Mi
+            limits:
+              cpu: 256m
+              memory: 256Mi
+          livenessProbe:
+            httpGet:
+              path: /api/all/health-check
+              port: 3000
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api/all/health-check
+              port: 3000
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+            periodSeconds: 20
+          # env:
+          #   - name: NODE_ENV
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: env-configmap
+          #         key: NODE_ENV
+          ports:
+            - containerPort: 3000
+              name: app3000
+      restartPolicy: Always

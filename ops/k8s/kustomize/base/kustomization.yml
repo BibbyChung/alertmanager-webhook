@@ -1,0 +1,34 @@
+commonLabels:
+  lab: alertmanager-webhook-lab
+
+commonAnnotations:
+  ann: alertmanager-webhook-ann
+
+resources:
+  - ./api/deployment.yml
+  - ./api/service.yml
+  - ./api/horizonalPodAutoScaler.yml
+
+configMapGenerator:
+  - name: env-configmap
+    envs:
+      - ./.env
+
+configurations:
+  - ./varReference.yml
+
+vars:
+  - name: API_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: api-svc
+    fieldref:
+      fieldpath: metadata.name
+  - name: API_IMAGE
+    objref:
+      kind: ConfigMap
+      apiVersion: v1
+      name: env-configmap
+    fieldref:
+      fieldpath: data.API_IMAGE
