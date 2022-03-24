@@ -1,0 +1,40 @@
+{
+	"name": "alertmanager-webhook_line-notify",
+	"version": "1.0.0",
+	"description": "Alertmanager Webhook to Line Notify",
+	"main": "./dist/web/server.js",
+	"scripts": {
+		"dev": "./.bin/tools.sh runDev",
+		"build:prod": "./.bin/tools.sh build",
+		"diagnostics": "tsc -project ./tsconfig.json --diagnostics",
+		"generate:env:dev": "./.bin/tools.sh createEnv dev",
+		"generate:env:prod": "./.bin/tools.sh createEnv prod",
+		"generate:env:more": "./.bin/tools.sh createEnvMore",
+		"lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+	},
+	"author": "Bibby Chung",
+	"license": "MIT",
+	"dependencies": {
+		"@b/lib": "workspace:^1.0.0",
+		"dotenv": "^16.0.0",
+		"fastify": "^3.22.0",
+		"fastify-plugin": "^3.0.1",
+		"jsonwebtoken": "^8.5.1",
+		"prettier": "^2.5.1",
+		"rxjs": "7.5.4"
+	},
+	"devDependencies": {
+		"@types/jsonwebtoken": "^8.5.0",
+		"@types/node": "^17.0.23",
+		"@typescript-eslint/eslint-plugin": "^5.10.0",
+		"@typescript-eslint/parser": "^5.10.0",
+		"esbuild": "^0.11.15",
+		"eslint": "^8.7.0",
+		"eslint-config-prettier": "^8.3.0",
+		"estrella": "^1.4.0",
+		"typescript": "4.6.2",
+		"vite": "^2.6.14",
+		"vite-plugin-node": "^0.0.15"
+	}
+}

@@ -1,0 +1,52 @@
+import 'dotenv/config';
+import { EnumEnvType, EnumMyLoggerLevel } from '@b/lib';
+import Fastify, { FastifyServerOptions } from 'fastify';
+import { initControllers } from './controllers/_init';
+import { envConfig } from './environment';
+
+const createServer = (opts: FastifyServerOptions = {}) => {
+	const server = Fastify(opts);
+
+	server.register(async (server, options) => {
+		process.on('SIGINT', () => server.close());
+		process.on('SIGTERM', () => server.close());
+	});
+
+	initControllers(server);
+
+	server.ready(() => {
+		console.log(server.printRoutes({ commonPrefix: false }));
+		// console.log(server.printPlugins());
+		// console.log(server.initialConfig);
+	});
+
+	return server;
+};
+
+const startServer = async () => {
+	const server = createServer({
+		// logger: {
+		// 	level: 'info'
+		// },
+		// disableRequestLogging: false
+		logger: false,
+		disableRequestLogging: envConfig.envType === EnumEnvType.prod
+	});
+
+	if (envConfig.envType === EnumEnvType.prod) {
+		try {
+			const port = process.env.SERVICE_PORT ?? 3000;
+			const host = process.env.SERVICE_HOST ?? envConfig.domain.host;
+			await server.listen(port, '0.0.0.0');
+			console.log(`${host}:${port} => ${host} server start...`);
+		} catch (err) {
+			console.log(err);
+			// server.log.error(err);
+			process.exit(1);
+		}
+	}
+
+	return server;
+};
+
+export const viteNodeApp = startServer();

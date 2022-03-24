@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+  p-api:
+    build:
+      context: ../../
+      dockerfile: ./ops/local/api.dockerfile
+    depends_on:
+      - p-lib
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../:/app/
+
+  p-lib:
+    build:
+      context: ../../
+      dockerfile: ./ops/local/lib.dockerfile
+    volumes:
+      - ../../:/app/
+
+  p-workspace:
+    build:
+      context: ../../
+      dockerfile: ./ops/local/workspace.dockerfile
+    working_dir: /app
+    ports:
+      - "4202:3000"
+    volumes:
+      - ../../:/app/
+    dns:
+      - 168.95.1.1
+      - 8.8.8.8
+    stdin_open: true
+    tty: true

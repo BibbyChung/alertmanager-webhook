@@ -1,0 +1,7 @@
+overwrite: true
+documents: null
+generates:
+  src/gql-schema/_g/_types-admin.ts:
+    schema: "http://p-admin:1337/graphql"
+    plugins:
+      - "typescript"
