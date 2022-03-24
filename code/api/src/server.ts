@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { EnumEnvType, EnumMyLoggerLevel } from '@b/lib';
+import { EnumEnvType } from '@b/lib';
 import Fastify, { FastifyServerOptions } from 'fastify';
 import { initControllers } from './controllers/_init';
 import { envConfig } from './environment';
@@ -16,8 +16,6 @@ const createServer = (opts: FastifyServerOptions = {}) => {
 
 	server.ready(() => {
 		console.log(server.printRoutes({ commonPrefix: false }));
-		// console.log(server.printPlugins());
-		// console.log(server.initialConfig);
 	});
 
 	return server;
@@ -35,8 +33,8 @@ const startServer = async () => {
 
 	if (envConfig.envType === EnumEnvType.prod) {
 		try {
-			const port = process.env.SERVICE_PORT ?? 3000;
-			const host = process.env.SERVICE_HOST ?? envConfig.domain.host;
+			const host = process.env.API_HOST ?? 'localhost';
+			const port = process.env.API_PORT ?? 3000;
 			await server.listen(port, '0.0.0.0');
 			console.log(`${host}:${port} => ${host} server start...`);
 		} catch (err) {

@@ -4,6 +4,10 @@ import * as jsonObj from './_env.json';
 interface IConfig {
 	siteName: string;
 	envType: EnumEnvType;
+	api: {
+		host: string;
+		port: string;
+	};
 	lineInfo: {
 		token: string;
 		endPoint: string;
