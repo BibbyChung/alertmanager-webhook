@@ -1,7 +1,7 @@
 # Alertmanager Webhook to Line Notify
 
 
-## docker-compose
+## docker compose
 
 ```yml
 
@@ -36,27 +36,28 @@ docker run -it \
 Use cURL to test it.
 
 ```sh
-curl --location --request POST 'http://localhost:3000/api/webhook/alert' \
---header 'Content-Type: application/json' \
---data-raw '{
-  "version": "4",
-  "alerts": [
-    {
-      "labels": {
-        "alertname": "test-webhook",
-        "severity" : "Warning"
-      },
-      "annotations": {
-        "Threshold": "<= 2",
-        "dashboard": "test-dashboard",
-        "description":"test-description",
-        "infoURL":"test-infoURL",
-        "summary":"this is a test summary",
-        "value":"2"
+curl --location \
+  --request POST 'http://localhost:3000/api/webhook/alert' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "version": "4",
+    "alerts": [
+      {
+        "labels": {
+          "alertname": "test-webhook",
+          "severity" : "Warning"
+        },
+        "annotations": {
+          "Threshold": "<= 2",
+          "dashboard": "test-dashboard",
+          "description":"test-description",
+          "infoURL":"test-infoURL",
+          "summary":"this is a test summary",
+          "value":"2"
+        }
       }
-    }
-  ]
-}'
+    ]
+  }'
 ```
 
 ## line notify
@@ -66,6 +67,7 @@ https://notify-bot.line.me/en/
 
 ## inspiration
 
-- https://github.com/DRuggeri/alertmanager_gotify_bridge
-- https://github.com/nontster/line-notify-gateway
+https://github.com/DRuggeri/alertmanager_gotify_bridge
+
+https://github.com/nontster/line-notify-gateway
 
