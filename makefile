@@ -11,8 +11,10 @@ project-build:
 project-logs:
 	cd ./ops/local && docker-compose -p line-notify-bridge logs -f
 
-k8s-all: k8s-gen-env k8s-build_push
+k8s-all: k8s-gen-env k8s-build-push k8s-copy-yaml
 k8s-gen-env:
 	cd ./ops/k8s && ./proc.sh "gen-env"
-k8s-build_push:
-	cd ./ops/k8s && ./proc.sh "build_push"
+k8s-build-push:
+	cd ./ops/k8s && ./proc.sh "build-push"
+k8s-copy-yaml:
+	cd ./ops/k8s && ./proc.sh "copy-yaml"

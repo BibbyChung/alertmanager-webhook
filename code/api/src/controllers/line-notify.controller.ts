@@ -12,6 +12,7 @@ const lineNotifyController: FastifyPluginAsync = async (server, options) => {
 		// },
 		async (req, res) => {
 			const info = req.body as alertmanagerWebhookType;
+
 			const rtnInfo = await sendMsgByLineNotify(info);
 			return { result: `${rtnInfo?.successCount} sent...` };
 		}
@@ -111,3 +112,54 @@ export default lineNotifyController;
 // 			}
 // 		]
 // 	}'
+
+// -----------
+
+// {
+//   "receiver": "line-noti",
+//   "status": "firing",
+//   "alerts": [
+//     {
+//       "status": "firing",
+//       "labels": {
+//         "alertname": "NodeMemoryUsage",
+//         "app_kubernetes_io_created_by": "resource-stack",
+//         "app_kubernetes_io_managed_by": "Lens",
+//         "app_kubernetes_io_name": "lens-metrics",
+//         "instance": "10.42.0.71:9100",
+//         "job": "node-exporter",
+//         "kubernetes_namespace": "lens-metrics",
+//         "kubernetes_node": "vm0",
+//         "team": "node"
+//       },
+//       "annotations": {
+//         "description": "10.42.0.71:9100: Memory usage is above 5% (current value is: 42.15327539513961",
+//         "summary": "10.42.0.71:9100: High Memory usage detected"
+//       },
+//       "startsAt": "2022-03-25T07:06:43.986Z",
+//       "endsAt": "0001-01-01T00:00:00Z",
+//       "generatorURL": "http://prometheus-0:9090/graph?g0.expr=%28node_memory_MemTotal_bytes+-+%28node_memory_MemFree_bytes+%2B+node_memory_Buffers_bytes+%2B+node_memory_Cached_bytes%29%29+%2F+node_memory_MemTotal_bytes+%2A+100+%3E+5&g0.tab=1",
+//       "fingerprint": "678058eb38ca002d"
+//     }
+//   ],
+//   "groupLabels": { "alertname": "NodeMemoryUsage" },
+//   "commonLabels": {
+//     "alertname": "NodeMemoryUsage",
+//     "app_kubernetes_io_created_by": "resource-stack",
+//     "app_kubernetes_io_managed_by": "Lens",
+//     "app_kubernetes_io_name": "lens-metrics",
+//     "instance": "10.42.0.71:9100",
+//     "job": "node-exporter",
+//     "kubernetes_namespace": "lens-metrics",
+//     "kubernetes_node": "vm0",
+//     "team": "node"
+//   },
+//   "commonAnnotations": {
+//     "description": "10.42.0.71:9100: Memory usage is above 5% (current value is: 42.15327539513961",
+//     "summary": "10.42.0.71:9100: High Memory usage detected"
+//   },
+//   "externalURL": "http://alertmanager-0:9093",
+//   "version": "4",
+//   "groupKey": "{}:{alertname=\"NodeMemoryUsage\"}",
+//   "truncatedAlerts": 0
+// }

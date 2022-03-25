@@ -7,6 +7,10 @@ import { envConfig } from './environment';
 const createServer = (opts: FastifyServerOptions = {}) => {
 	const server = Fastify(opts);
 
+	server.addHook('onRequest', async (request, reply) => {
+		console.log(`==> ${request.method} ${request.url}`);
+	});
+
 	server.register(async (server, options) => {
 		process.on('SIGINT', () => server.close());
 		process.on('SIGTERM', () => server.close());

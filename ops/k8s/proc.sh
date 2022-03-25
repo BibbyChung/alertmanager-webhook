@@ -14,7 +14,7 @@ _homePath=$(pwd)/../..
 _apiImage0="${_projectName}/alertmanager-webhook:${_ver}"
 _apiImage1="${_projectName}/alertmanager-webhook:latest"
 
-if [[ "${_func}" == "build_push" ]]; then
+if [[ "${_func}" == "build-push" ]]; then
 
   docker buildx build \
     --platform linux/amd64,linux/arm64 \
@@ -35,5 +35,12 @@ if [[ "${_func}" == "gen-env" ]]; then
   cat >${_homePath}/ops/k8s/kustomize/base/.env <<EOF
 API_IMAGE=${_apiImage0}
 EOF
+
+fi
+
+if [[ "${_func}" == "copy-yaml" ]]; then
+
+  cd ${_homePath}/ops/k8s/kustomize/overlays/prod &&\
+    kubectl kustomize ./ | pbcopy
 
 fi

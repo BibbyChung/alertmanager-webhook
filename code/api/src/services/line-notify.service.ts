@@ -18,6 +18,9 @@ export const sendMsgByLineNotify = async (info: alertmanagerWebhookType) => {
 			message: `
 summary: ${item.annotations.summary}
 description: ${item.annotations.description}
+
+--- 詳細內容(below) ---
+${JSON.stringify(item)}
 `
 		};
 
