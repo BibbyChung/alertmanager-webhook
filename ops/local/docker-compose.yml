@@ -11,6 +11,9 @@ services:
       - "3000:3000"
     volumes:
       - ../../:/app/
+    environment:
+      - LINEINFO_ENDPOINT=${LINEINFO_ENDPOINT}
+      - LINEINFO_TOKEN=${LINEINFO_TOKEN}
 
   p-lib:
     build:

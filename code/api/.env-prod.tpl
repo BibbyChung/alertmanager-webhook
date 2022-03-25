@@ -4,9 +4,5 @@
 	"api": {
 		"host": "localhost",
 		"port": 3000
-	},
-	"lineInfo": {
-		"token": "<token>",
-		"endPoint": "<endPoint>"
 	}
 }

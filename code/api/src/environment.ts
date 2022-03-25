@@ -6,11 +6,7 @@ interface IConfig {
 	envType: EnumEnvType;
 	api: {
 		host: string;
-		port: string;
-	};
-	lineInfo: {
-		token: string;
-		endPoint: string;
+		port: number;
 	};
 }
 

@@ -1,11 +1,10 @@
 import { postByUrlencodedHttpClient } from '@b/lib';
 import { alertmanagerWebhookType, lineResultType } from '../common/_types';
-import { envConfig } from '../environment';
 
 export const sendMsgByLineNotify = async (info: alertmanagerWebhookType) => {
-	const lineInfo = envConfig.lineInfo;
-	const url = lineInfo.endPoint;
-	const token = lineInfo.token;
+	const url = process.env['LINEINFO_ENDPOINT'] ?? '';
+	const token = process.env['LINEINFO_TOKEN'] ?? '';
+
 	const options = {
 		headers: {
 			Authorization: `Bearer ${token}`

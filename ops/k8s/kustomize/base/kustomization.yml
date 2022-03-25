@@ -18,13 +18,6 @@ configurations:
   - ./varReference.yml
 
 vars:
-  - name: API_SERVICE_NAME
-    objref:
-      kind: Service
-      apiVersion: v1
-      name: api-svc
-    fieldref:
-      fieldpath: metadata.name
   - name: API_IMAGE
     objref:
       kind: ConfigMap

@@ -9,3 +9,18 @@ spec:
       maxSurge: 1
       maxUnavailable: 1
     type: RollingUpdate
+  template:
+    spec:
+      containers:
+        - name: app
+          env:
+            - name: LINEINFO_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: LINEINFO_ENDPOINT
+            - name: LINEINFO_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: LINEINFO_TOKEN

@@ -61,7 +61,7 @@ if [[ "${_func}" == "createEnv" ]]; then
   cat ${__envPath} >${_home}../src/_env.json
   log "create .env (${_nodeEnv})"
   node ${_home}../../lib/.bin/convertJsonToEnv.js ${__envPath} ${_home}../.env
-  echo "NODE_ENV=\"${_nodeEnv}\"" >>${_home}../.env
+  echo "NODE_ENV=${_nodeEnv}" >>${_home}../.env
 fi
 
 if [[ "${_func}" == "createEnvMore" ]]; then
@@ -72,8 +72,8 @@ if [[ "${_func}" == "createEnvMore" ]]; then
     exit 0
   fi
   log "add env more info"
-  echo "VITE_GIT_SHORT_VER=\"${_gitShortVer:-"xxxx"}\"" >>${__envPath}
-  echo "VITE_GIT_TIME=\"${_gitTime:-"xxxx"}\"" >>${__envPath}
+  echo "VITE_GIT_SHORT_VER=${_gitShortVer:-xxxx}" >>${__envPath}
+  echo "VITE_GIT_TIME=${_gitTime:-xxxx}" >>${__envPath}
 fi
 
 if [[ "${_func}" == "" ]]; then
