@@ -26,6 +26,7 @@ spec:
       containers:
         - name: app
           image: $(API_IMAGE) # app-image
+          # imagePullPolicy: Always
           resources:
             requests:
               cpu: 128m
