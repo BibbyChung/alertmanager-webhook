@@ -14,6 +14,11 @@ spec:
       containers:
         - name: app
           env:
+            - name: TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: TYPE
             - name: LINENOTIFY_ENDPOINT
               valueFrom:
                 configMapKeyRef:
