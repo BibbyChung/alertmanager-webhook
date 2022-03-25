@@ -1,9 +1,17 @@
-import { postByUrlencodedHttpClient } from '@b/lib';
+import { EnumMyErrorType, MyError, postByUrlencodedHttpClient } from '@b/lib';
 import { alertmanagerWebhookType, lineResultType } from '../common/_types';
 
 export const sendMsgByLineNotify = async (info: alertmanagerWebhookType) => {
-	const url = process.env['LINEINFO_ENDPOINT'] ?? '';
-	const token = process.env['LINEINFO_TOKEN'] ?? '';
+	const url = process.env['LINENOTIFY_ENDPOINT'];
+	const token = process.env['LINENOTIFY_TOKEN'];
+
+	if (!url) {
+		throw new MyError(EnumMyErrorType.lineNotifyEndpoint);
+	}
+
+	if (!token) {
+		throw new MyError(EnumMyErrorType.lineNotifyEndpoint);
+	}
 
 	const options = {
 		headers: {

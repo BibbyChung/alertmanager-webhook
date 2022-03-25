@@ -12,8 +12,9 @@ services:
     volumes:
       - ../../:/app/
     environment:
-      - LINEINFO_ENDPOINT=${LINEINFO_ENDPOINT}
-      - LINEINFO_TOKEN=${LINEINFO_TOKEN}
+      - LINENOTIFY_ENDPOINT=${LINENOTIFY_ENDPOINT}
+      - LINENOTIFY_TOKEN=${LINENOTIFY_TOKEN}
+      - TYPE=${TYPE}
 
   p-lib:
     build:

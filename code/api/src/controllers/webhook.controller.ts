@@ -1,10 +1,11 @@
+import { EnumMyErrorType, MyError } from '@b/lib';
 import { FastifyPluginAsync } from 'fastify';
-import { alertmanagerWebhookType } from '../common/_types';
+import { alertmanagerWebhookType, webhookType } from '../common/_types';
 import { sendMsgByLineNotify } from '../services/line-notify.service';
 
-const lineNotifyController: FastifyPluginAsync = async (server, options) => {
+const webhookController: FastifyPluginAsync = async (server, options) => {
 	server.post(
-		`/webhook`,
+		`/alert`,
 		// {
 		// 	schema: {
 		// 		body: addInputJsonSchema
@@ -13,13 +14,19 @@ const lineNotifyController: FastifyPluginAsync = async (server, options) => {
 		async (req, res) => {
 			const info = req.body as alertmanagerWebhookType;
 
-			const rtnInfo = await sendMsgByLineNotify(info);
-			return { result: `${rtnInfo?.successCount} sent...` };
+			const type = process.env['TYPE'] as webhookType;
+
+			if (type === 'lineNotify') {
+				const rtnInfo = await sendMsgByLineNotify(info);
+				return { result: `${rtnInfo?.successCount} sent...` };
+			}
+
+			throw new MyError(EnumMyErrorType.plsSetUpType);
 		}
 	);
 };
 
-export default lineNotifyController;
+export default webhookController;
 
 // # _token=aLsgYZxdgDcbnnnkx3v3JYJIjYPfuXylR9MgOL18d5I
 // # msg="

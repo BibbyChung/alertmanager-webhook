@@ -10,7 +10,11 @@ export enum EnumMyErrorType {
 
 	googleNotProvideEmail,
 
-	notSupportHttpContentType
+	notSupportHttpContentType,
+
+	plsSetUpType,
+	lineNotifyEndpoint,
+	lineNotifyToken,
 }
 
 export class MyError extends Error {
@@ -22,7 +26,10 @@ export class MyError extends Error {
 		[EnumMyErrorType.notSupportHttpContentType]: {
 			statusCode: 999,
 			message: 'notSupportHttpContentType'
-		}
+		},
+		[EnumMyErrorType.plsSetUpType]:{ statusCode: 700, message: 'please set up type'},
+		[EnumMyErrorType.lineNotifyEndpoint]:{ statusCode: 701, message: 'please set up line-notify endpoint'},
+		[EnumMyErrorType.lineNotifyToken]:{ statusCode: 702, message: 'please set up line-notify token'}
 	};
 
 	constructor(public type: EnumMyErrorType) {

@@ -18,3 +18,5 @@ export type alertmanagerWebhookType = {
 export type lineResultType = {
 	status: string;
 };
+
+export type webhookType = 'lineNotify' | 'telegramBot';
