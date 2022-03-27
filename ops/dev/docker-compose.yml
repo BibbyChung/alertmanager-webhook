@@ -4,7 +4,7 @@ services:
   p-api:
     build:
       context: ../../
-      dockerfile: ./ops/local/api.dockerfile
+      dockerfile: ./ops/dev/api.dockerfile
     depends_on:
       - p-lib
     ports:
@@ -19,14 +19,14 @@ services:
   p-lib:
     build:
       context: ../../
-      dockerfile: ./ops/local/lib.dockerfile
+      dockerfile: ./ops/dev/lib.dockerfile
     volumes:
       - ../../:/app/
 
   p-workspace:
     build:
       context: ../../
-      dockerfile: ./ops/local/workspace.dockerfile
+      dockerfile: ./ops/dev/workspace.dockerfile
     working_dir: /app
     ports:
       - "4202:3000"
