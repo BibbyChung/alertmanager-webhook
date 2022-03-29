@@ -36,7 +36,7 @@ spec:
               memory: 256Mi
           livenessProbe:
             httpGet:
-              path: /api/all/health-check
+              path: /api/a/healthz
               port: 3000
             initialDelaySeconds: 30
             timeoutSeconds: 10
@@ -45,19 +45,13 @@ spec:
             periodSeconds: 20
           readinessProbe:
             httpGet:
-              path: /api/all/health-check
+              path: /api/a/healthz
               port: 3000
             initialDelaySeconds: 30
             timeoutSeconds: 10
             successThreshold: 1
             failureThreshold: 10
             periodSeconds: 20
-          # env:
-          #   - name: NODE_ENV
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         name: env-configmap
-          #         key: NODE_ENV
           ports:
             - containerPort: 3000
               name: app3000

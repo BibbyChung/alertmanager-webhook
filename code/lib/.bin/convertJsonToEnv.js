@@ -40,7 +40,7 @@ const parseKeyValuePairs = (json, prefix) => {
 
 const convertJsonToEnv = async (configObj) => {
 	const keyValuePairs = parseKeyValuePairs(configObj);
-	return keyValuePairs.map((kayValuePair) => `${kayValuePair[0]}=${kayValuePair[1]}`).join('\n');
+	return keyValuePairs.map((kayValuePair) => `${kayValuePair[0]}="${kayValuePair[1]}"`).join('\n');
 };
 
 const main = async () => {

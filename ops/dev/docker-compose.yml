@@ -32,8 +32,5 @@ services:
       - "4202:3000"
     volumes:
       - ../../:/app/
-    dns:
-      - 168.95.1.1
-      - 8.8.8.8
     stdin_open: true
     tty: true
