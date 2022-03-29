@@ -24,10 +24,12 @@ export const sendMsgByLineNotify = async (info: alertmanagerWebhookType) => {
 	for (const item of alerts) {
 		const body = {
 			message: `
+status: ${item.status ?? '-'}
 summary: ${item.annotations.summary}
 description: ${item.annotations.description}
 
---- 詳細內容(below) ---
+==== detail (below) ====
+
 ${JSON.stringify(item)}
 `
 		};

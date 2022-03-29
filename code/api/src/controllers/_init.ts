@@ -5,7 +5,7 @@ import webhookController from './webhook.controller';
 
 export const initControllers = (server: FastifyInstance) => {
 	const baseApiUrl = '/api';
-	server.register(allController, { prefix: `${baseApiUrl}/all` });
+	server.register(allController, { prefix: `${baseApiUrl}/a` });
 	server.register(webhookController, { prefix: `${baseApiUrl}/webhook` });
 	server.register(t0Controller, { prefix: `${baseApiUrl}/t0` });
 };
