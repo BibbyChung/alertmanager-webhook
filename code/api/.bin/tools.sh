@@ -53,9 +53,9 @@ if [[ "${_func}" == "createEnv" ]]; then
   log "createEnv"
   __envPath=""
   if [[ "${_nodeEnv}" == "prod" ]]; then
-    __envPath=${_currentFolder}../.env.prod
+    __envPath=${_currentFolder}../.env.prod.json
   else
-    __envPath=${_currentFolder}../.env.dev
+    __envPath=${_currentFolder}../.env.dev.json
   fi
   log "create .env.json (${_nodeEnv})"
   cat ${__envPath} >${_currentFolder}../src/_env.json
