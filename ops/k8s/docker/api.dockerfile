@@ -45,7 +45,7 @@ COPY --from=build_cli_lib /app/code/lib/dist/ /app/code/lib/dist/
 COPY ./code/api/package.json /app/code/api/package.json
 
 RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
-  pnpm install -r --offline
+  pnpm i -r --offline
 
 COPY ./code/tsconfig.json /app/code/tsconfig.json
 
@@ -70,9 +70,6 @@ COPY ./code/lib/.bin/ /app/code/lib/.bin/
 COPY --from=build_cli_lib /app/code/lib/dist/ /app/code/lib/dist/
 
 COPY ./code/api/package.json /app/code/api/package.json
-
-RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
-  pnpm i -r --offline --prod
 
 RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
   pnpm i -r --offline --prod
