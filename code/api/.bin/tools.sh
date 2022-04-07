@@ -3,7 +3,7 @@
 set -ue #xv
 set -o pipefail
 
-_home="/app/code/api/.bin/"
+_currentFolder="$(realpath $0 | sed 's|\(.*\)/.*|\1|')/"
 
 _func=${1:-""}
 _nodeEnv=${2:-""}
@@ -15,10 +15,10 @@ function log() {
 }
 
 function loadEnv() {
-  if [ -f "${_home}../.env" ]; then
+  if [ -f "${_currentFolder}../.env" ]; then
     log "load .env"
-    # export $(cat "${_home}../.env" | xargs)
-    source "${_home}../.env"
+    # export $(cat "${_currentFolder}../.env" | xargs)
+    source "${_currentFolder}../.env"
   fi
 }
 
@@ -35,37 +35,37 @@ fi
 if [[ "${_func}" == "runProd" ]]; then
   loadEnv
   log "run prod"
-  node ${_home}../dist/server.js
+  node ${_currentFolder}../dist/server.js
 fi
 
 if [[ "${_func}" == "build" ]]; then
   log "rm dist"
-  rm -rf ${_home}../dist
+  rm -rf ${_currentFolder}../dist
 
   pnpm generate:env:prod
   # pnpm generate:env:more
   loadEnv
   log "build cjs"
-  tsc -p ${_home}../tsconfig.commonjs.json
+  tsc -p ${_currentFolder}../tsconfig.commonjs.json
 fi
 
 if [[ "${_func}" == "createEnv" ]]; then
   log "createEnv"
   __envPath=""
   if [[ "${_nodeEnv}" == "prod" ]]; then
-    __envPath=${_home}../.env-prod.tpl
+    __envPath=${_currentFolder}../.env-prod.tpl
   else
-    __envPath=${_home}../.env-dev.tpl
+    __envPath=${_currentFolder}../.env-dev.tpl
   fi
   log "create .env.json (${_nodeEnv})"
-  cat ${__envPath} >${_home}../src/_env.json
+  cat ${__envPath} >${_currentFolder}../src/_env.json
   log "create .env (${_nodeEnv})"
-  node ${_home}../../lib/.bin/convertJsonToEnv.js ${__envPath} ${_home}../.env
-  echo "NODE_ENV=\"${_nodeEnv}\"" >>${_home}../.env
+  node ${_currentFolder}../../lib/.bin/convertJsonToEnv.js ${__envPath} ${_currentFolder}../.env
+  echo "NODE_ENV=\"${_nodeEnv}\"" >>${_currentFolder}../.env
 fi
 
 if [[ "${_func}" == "createEnvMore" ]]; then
-  __envPath=${_home}../.env
+  __envPath=${_currentFolder}../.env
   __isExistCount=$(cat ${__envPath} | { grep "GIT_SHORT_VER" || :; } | wc -l)
   if ((${__isExistCount} != 0)); then
     log "env more info existed"
