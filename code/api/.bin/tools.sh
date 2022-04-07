@@ -53,15 +53,16 @@ if [[ "${_func}" == "createEnv" ]]; then
   log "createEnv"
   __envPath=""
   if [[ "${_nodeEnv}" == "prod" ]]; then
-    __envPath=${_currentFolder}../.env-prod.tpl
+    __envPath=${_currentFolder}../.env.prod
   else
-    __envPath=${_currentFolder}../.env-dev.tpl
+    __envPath=${_currentFolder}../.env.dev
   fi
   log "create .env.json (${_nodeEnv})"
   cat ${__envPath} >${_currentFolder}../src/_env.json
   log "create .env (${_nodeEnv})"
   node ${_currentFolder}../../lib/.bin/convertJsonToEnv.js ${__envPath} ${_currentFolder}../.env
   echo "NODE_ENV=\"${_nodeEnv}\"" >>${_currentFolder}../.env
+  echo "VITE_NODE_ENV=\"${_nodeEnv}\"" >>${_currentFolder}../.env
 fi
 
 if [[ "${_func}" == "createEnvMore" ]]; then
