@@ -5,9 +5,9 @@ commonAnnotations:
   ann: alertmanager-webhook-ann
 
 resources:
-  - ./api/deployment.yml
-  - ./api/service.yml
-  - ./api/horizonalPodAutoScaler.yml
+  - ./alertmanager-webhook/deployment.yml
+  - ./alertmanager-webhook/service.yml
+  - ./alertmanager-webhook/horizonalPodAutoScaler.yml
 
 configMapGenerator:
   - name: env-configmap
@@ -18,10 +18,10 @@ configurations:
   - ./varReference.yml
 
 vars:
-  - name: API_IMAGE
+  - name: ALERTMANAGER_WEBHOOK_IMAGE
     objref:
       kind: ConfigMap
       apiVersion: v1
       name: env-configmap
     fieldref:
-      fieldpath: data.API_IMAGE
+      fieldpath: data.ALERTMANAGER_WEBHOOK_IMAGE

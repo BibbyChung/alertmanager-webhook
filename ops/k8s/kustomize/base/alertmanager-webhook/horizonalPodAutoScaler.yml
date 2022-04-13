@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: api-hpa
+  name: alertmanager-webhook-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: api-deployment
+    name: alertmanager-webhook-deployment
   minReplicas: 1
   maxReplicas: 1
   metrics:

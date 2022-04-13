@@ -33,7 +33,7 @@ fi
 if [[ "${_func}" == "gen-env" ]]; then
 
   cat >${_homePath}/ops/k8s/kustomize/base/.env <<EOF
-API_IMAGE=${_apiImage0}
+ALERTMANAGER_WEBHOOK_IMAGE=${_apiImage0}
 EOF
 
 fi

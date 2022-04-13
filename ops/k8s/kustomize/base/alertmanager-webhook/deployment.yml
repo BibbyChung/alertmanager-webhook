@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-deployment
+  name: alertmanager-webhook-deployment
   labels:
-    app: api-lab
+    app: alertmanager-webhook-lab
 spec:
   selector:
     matchLabels:
-      app: api-pod
+      app: alertmanager-webhook-pod
   replicas: 1
   strategy:
     rollingUpdate:
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       labels:
-        app: api-pod
+        app: alertmanager-webhook-pod
     spec:
       # initContainers:
       # Init containers are exactly like regular containers, except:
@@ -25,7 +25,7 @@ spec:
       # - Each init container must complete successfully before the next one starts.
       containers:
         - name: app
-          image: $(API_IMAGE) # app-image
+          image: $(ALERTMANAGER_WEBHOOK_IMAGE) # app-image
           imagePullPolicy: Always
           resources:
             requests:
