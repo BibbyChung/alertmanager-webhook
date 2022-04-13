@@ -1,11 +1,11 @@
 bases:
   - ../../base/
-namespace: alertmanager-webhook-prod
+namespace: monitor
 namePrefix: prod-
 
 patchesStrategicMerge:
-  - ./api/horizonalPodAutoScaler-patch.yml
-  - ./api/deployment-patch.yml
+  - ./alertmanager-webhook/horizonalPodAutoScaler-patch.yml
+  - ./alertmanager-webhook/deployment-patch.yml
 
 configMapGenerator:
   - name: env-configmap

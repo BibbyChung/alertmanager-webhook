@@ -1,6 +1,6 @@
 bases:
   - ../../base/
-namespace: alertmanager-webhook-dev
+namespace: monitor
 namePrefix: dev-
 
 configMapGenerator:

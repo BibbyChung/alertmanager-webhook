@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: api-hpa
+  name: alertmanager-webhook-hpa
 spec:
   minReplicas: 2
   maxReplicas: 4
