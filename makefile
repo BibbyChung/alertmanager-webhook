@@ -1,15 +1,15 @@
 workspace-up:
-	cd ./ops/dev && docker-compose -p line-notify-bridge up -d p-workspace
-	cd ./ops/dev && docker-compose -p line-notify-bridge exec p-workspace /bin/bash
+	cd ./ops/dev && docker-compose -p alertmanager-webhook up -d p-workspace
+	cd ./ops/dev && docker-compose -p alertmanager-webhook exec p-workspace /bin/bash
 
 project-up: project-down
-	cd ./ops/dev && docker-compose -p line-notify-bridge up
+	cd ./ops/dev && docker-compose -p alertmanager-webhook up
 project-down:
-	cd ./ops/dev && docker-compose -p line-notify-bridge down
+	cd ./ops/dev && docker-compose -p alertmanager-webhook down
 project-build:
-	cd ./ops/dev && docker-compose -p line-notify-bridge build
+	cd ./ops/dev && docker-compose -p alertmanager-webhook build
 project-logs:
-	cd ./ops/dev && docker-compose -p line-notify-bridge logs -f
+	cd ./ops/dev && docker-compose -p alertmanager-webhook logs -f
 
 k8s-all: k8s-gen-env k8s-build-push k8s-copy-yaml
 k8s-gen-env:

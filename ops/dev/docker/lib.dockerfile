@@ -9,7 +9,7 @@ RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
 # --- lib ---
 FROM pnpm
 
-WORKDIR /app/code/lib
+WORKDIR /app/code/packages/lib
 
 # for tsc performance(fs.watch)
 ENV TSC_NONPOLLING_WATCHER=true
