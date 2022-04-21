@@ -1,0 +1,16 @@
+{
+  "name": "alertmanager-webhook",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel"
+  },
+  "dependencies": {
+    "turbo": "^1.2.4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

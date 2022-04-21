@@ -16,13 +16,6 @@ services:
       - LINENOTIFY_TOKEN=${LINENOTIFY_TOKEN}
       - TYPE=${TYPE}
 
-  p-lib:
-    build:
-      context: ../../
-      dockerfile: ./ops/dev/docker/lib.dockerfile
-    volumes:
-      - ../../:/app/
-
   p-workspace:
     build:
       context: ../../

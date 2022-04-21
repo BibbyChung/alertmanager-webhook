@@ -7,7 +7,7 @@
 	"types": "dist/cjs/index.d.ts",
 	"sideEffects": false,
 	"scripts": {
-		"build:watch": "./.bin/tools.sh buildWatch",
+		"dev": "./.bin/tools.sh buildWatch",
 		"build": "./.bin/tools.sh build",
 		"lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
 		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""

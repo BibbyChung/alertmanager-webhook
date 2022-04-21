@@ -5,7 +5,7 @@
 	"main": "./dist/web/server.js",
 	"scripts": {
 		"dev": "./.bin/tools.sh runDev",
-		"build:prod": "./.bin/tools.sh build",
+		"build": "./.bin/tools.sh build",
 		"diagnostics": "tsc -project ./tsconfig.json --diagnostics",
 		"generate:env:dev": "./.bin/tools.sh createEnv dev",
 		"generate:env:prod": "./.bin/tools.sh createEnv prod",
@@ -16,7 +16,7 @@
 	"author": "Bibby Chung",
 	"license": "MIT",
 	"dependencies": {
-		"@b/lib": "workspace:^1.0.0",
+		"@b/lib": "workspace:*",
 		"dotenv": "^16.0.0",
 		"fastify": "^3.22.0",
 		"fastify-plugin": "^3.0.1",

@@ -9,9 +9,9 @@ RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
 # --- api ---
 FROM pnpm
 
-WORKDIR /app/code/apps/api
+WORKDIR /app/code
 
 # for tsc performance(fs.watch)
 ENV TSC_NONPOLLING_WATCHER=true
 
-CMD ["pnpm", "dev"]
+CMD ["pnpm", "run", "dev"]
