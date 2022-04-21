@@ -60,7 +60,7 @@ if [[ "${_func}" == "createEnv" ]]; then
   log "create .env.json (${_nodeEnv})"
   cat ${__envPath} >${_currentFolder}../src/_env.json
   log "create .env (${_nodeEnv})"
-  node ${_currentFolder}../../../packages/lib/.bin/convertJsonToEnv.js ${__envPath} ${_currentFolder}../.env
+  node ${_currentFolder}../../../.bin/convertJsonToEnv.js ${__envPath} ${_currentFolder}../.env
   echo "NODE_ENV=\"${_nodeEnv}\"" >>${_currentFolder}../.env
   echo "VITE_NODE_ENV=\"${_nodeEnv}\"" >>${_currentFolder}../.env
 fi

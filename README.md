@@ -7,7 +7,7 @@
 Run it by docker
 
 ```sh
-docker run -it \
+docker run \
   -p 3000:3000 \
   -e LINENOTIFY_ENDPOINT=${LINENOTIFY_ENDPOINT} \
   -e LINENOTIFY_TOKEN=${LINENOTIFY_TOKEN} \
