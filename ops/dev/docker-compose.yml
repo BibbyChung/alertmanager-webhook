@@ -5,8 +5,6 @@ services:
     build:
       context: ../../
       dockerfile: ./ops/dev/docker/api.dockerfile
-    depends_on:
-      - p-lib
     ports:
       - "3000:3000"
     volumes:
